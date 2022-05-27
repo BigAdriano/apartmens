@@ -24,3 +24,4 @@ results.to_sql('apartments_average', engine, schema='public', if_exists='replace
 select_query_avg = """SELECT * FROM apartments_average"""
 
 results_avg = pd.DataFrame(engine.execute(select_query_avg).fetchall())
+print(results_avg)
