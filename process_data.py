@@ -82,6 +82,6 @@ results_table.to_csv("Test.csv", encoding='utf-8-sig')
 results_table.to_excel("Test.xlsx", encoding='utf-8-sig')"""
 
 #Put data from AWS RDS after crearting PostgreSQL database - username, password, endpoint
-engine = sqla.create_engine('postgresql://postgres:polonez12@database-1.cmhslx64rjfk.us-east-1.rds.amazonaws.com/postgres')
+engine = sqla.create_engine('postgresql://<USERNAME>:<PASSWORD>@<DATABASE_ENDPOINT>.amazonaws.com/postgres')
 
 results_table.to_sql('apartments', engine, schema='public', if_exists='replace', index=False)
