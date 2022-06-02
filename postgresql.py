@@ -3,7 +3,7 @@ import pandas as pd
 import datetime
 
 #Put data from AWS RDS after crearting PostgreSQL database - username, password, endpoint
-engine = sqla.create_engine('postgresql://postgres:polonez12@database-1.cmhslx64rjfk.us-east-1.rds.amazonaws.com/postgres')
+engine = sqla.create_engine('postgresql://<USERNAME>:<PASSWORD>@<DATABASE_ENDPOINT>.amazonaws.com/postgres')
 
 
 select_query_group= """SELECT "Market", "SpaceCategory", AVG("MetrePrice") AS "AveragePrice" FROM 
