@@ -5,7 +5,9 @@ import datetime
 #Put data from AWS RDS after crearting PostgreSQL database - username, password, endpoint
 engine = sqla.create_engine('postgresql://<USERNAME>:<PASSWORD>@<DATABASE_ENDPOINT>.amazonaws.com/postgres')
 
-
+#Below query is used to group apartments offer into 4 categories, depending on total space of single apartments
+#Similar to categories used for bankier.pl economic portal - see example:
+#https://www.bankier.pl/wiadomosc/Ceny-ofertowe-mieszkan-maj-2022-Raport-Bankier-pl-8342893.html
 select_query_group= """SELECT "Market", "SpaceCategory", AVG("MetrePrice") AS "AveragePrice" FROM 
                (SELECT *, CASE
                 WHEN "Space" > 90 THEN '90-'
@@ -19,6 +21,7 @@ select_query_group= """SELECT "Market", "SpaceCategory", AVG("MetrePrice") AS "A
 results = pd.DataFrame(engine.execute(select_query_group).fetchall())
 results = results.assign(Date=datetime.date.today())
 
+#Results of previous query are added to new table with average values for given month
 results.to_sql('apartments_average', engine, schema='public', if_exists='replace', index=False)
 
 select_query_avg = """SELECT * FROM apartments_average"""
